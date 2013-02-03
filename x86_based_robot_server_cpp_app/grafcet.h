@@ -1,0 +1,317 @@
+/* specific Grafcet elements 
+template classes and declarations*/
+
+#ifndef GRAFCET_CLASSES_H
+#define GRAFCET_CLASSES_H
+
+#include <iostream>
+#include <vector>
+#include <map>
+#include <stdio.h>
+#include <unistd.h>
+#include <pthread.h>	
+#include <stdarg.h>
+
+#include <sched.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <sys/mman.h>
+  
+#include <rtai.h>
+#include <rtai_sched.h>
+#include <rtai_lxrt.h>
+
+#include "sensor_actuator.h"
+
+using namespace std;
+
+
+#define NAME 7
+class Thread{
+protected:
+	pthread_t tid;	
+	char name[NAME];	
+	pthread_mutex_t mutex; 
+	
+	virtual void debug();
+
+public: 
+	Thread();
+	Thread( char * nname); 
+	virtual ~Thread();	
+	char * set_name(char * nname);
+	char * get_name();	
+};
+
+
+
+typedef vector<class Transition*> TRANSITIONS_VECTOR;
+
+class Stage: public Thread {	
+private:
+	TRANSITIONS_VECTOR transitions;	
+	
+	void transition(); 
+	static void * thread(void * p);
+protected:
+	int active;
+public:
+	Stage();
+	Stage(char * name); 
+	virtual ~Stage();
+	virtual void execute();	
+	virtual void run()=0;	
+	void add(class Transition *t); 
+	virtual void stop();
+	virtual void start(); 
+};
+
+//------------------------------------------------------------------------------------------------
+//  Transition CLASS
+//------------------------------------------------------------------------------------------------
+
+typedef vector<class Stage*> STAGES_VECTOR;
+
+class Transition: public Thread{	
+private:
+	STAGES_VECTOR follows;	
+	int predecessors; 
+	int pred_ended; 
+	
+	static void * thread(void * p); 
+protected:
+	virtual void th_go(); 
+public:
+	Transition(); 
+	Transition(char * nname); 
+	virtual ~Transition();
+	int evaluate();
+	virtual int eval()=0;	
+	void go(); 
+	void add(Stage *e); 
+	void pred(); 
+	int end(); 	
+	void reset(); 
+	void stop();  
+	void start(); 
+};
+
+
+//------------------------------------------------------------------------------------------------
+//  Action CLASS
+//------------------------------------------------------------------------------------------------
+
+class Action:public Stage{ 
+public:
+	Action();
+	Action(char * name); 
+	virtual ~Action();
+};
+
+
+//------------------------------------------------------------------------------------------------
+//  Cycle CLASS
+//------------------------------------------------------------------------------------------------
+class Cycle:public Stage{ 
+protected:
+	unsigned long long int period; 
+	RT_TASK* task;  
+public:
+	Cycle();
+	Cycle(char * name);	
+	virtual ~Cycle();
+	void run(); 
+	virtual void initialize()=0; 
+	virtual int final_cond()=0; 
+	virtual void control()=0; 
+	virtual void end_ctrl()=0; 
+	void set_period(unsigned long long int nperiod);
+	unsigned long long int get_period();
+	void stop();
+};
+
+//------------------------------------------------------------------------------------------------
+//  FinalTransition CLASS
+//------------------------------------------------------------------------------------------------
+
+class FinalTransition:public Transition{ 
+private:
+	pthread_mutex_t * mutex;	
+	pthread_cond_t * var_cond;	
+protected:
+	void th_go(); 
+public:
+	FinalTransition();
+	virtual ~FinalTransition();
+	int eval(); 
+	void unblock(pthread_mutex_t & m, pthread_cond_t & v);
+		
+	void stop();
+		
+};
+
+//------------------------------------------------------------------------------------------------
+//  Phase CLASS
+//------------------------------------------------------------------------------------------------
+class Phase:public Stage{	
+private:
+	Stage *first; 		
+	Stage *last; 		
+	FinalTransition * tfinal;
+	RT_TASK* task_main;	
+	int activ;		
+
+ 	pthread_mutex_t mutex; 		
+	pthread_cond_t  var_cond; 	
+
+public:
+	Phase();
+	virtual ~Phase();
+	void first_stage(Stage * e);
+	void last_stage(Stage * e);
+	void run();
+	void execute();
+	void start(); 
+	void stop();
+};
+
+//------------------------------------------------------------------------------------------------
+//  Control CLASS
+//------------------------------------------------------------------------------------------------
+class Control{
+private: 
+	double * parameters;
+	Phase ** phases;
+	int n_phases; 
+	Sensor ** sensors;
+	Counter ** counters;
+	Actuator ** actuators;
+
+	RT_TASK* task_main;	
+public:
+	Control();
+	virtual ~Control();
+	double get(int param); 
+	double set(int param, double value); 
+	double exe_phase(int phase); 
+	double stop(); 
+	double actuator(int actuator, double value); 
+	double sensor(int sensor); 
+	int counter(int counter);
+	void shutDown();
+
+	void set_parameters(double p[]);
+	double * get_parameters();	
+	
+	void set_phases(Phase * f[], int n);
+	Phase ** get_phases();
+	
+	void set_sensors(Sensor * s[]);
+	Sensor ** get_sensors();	
+
+	void set_counters(Counter * c[]);
+	Counter ** get_counters();
+	
+	void set_actuators(Actuator * a[]);
+	Actuator ** get_actuators();
+
+};
+
+/* system libs*/
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <assert.h>
+#include <pthread.h>
+
+class ControlServer :public Thread {	
+protected:
+
+	int fd_s;	
+	int fd_c;	
+	int port;	
+	char ip_control[15];	
+	volatile bool serve; 			
+	map<pthread_t, int> thr_map;	
+	
+	Control * control; 		
+	
+private:
+	char      ip[15];		
+	volatile bool serving;		
+	int connect(); 
+	int serve_client(int fd, char * ip); 
+	int get_fd_c(); 
+	static void * pthread_serve_requests(void * p); 
+	static void * pth_serve_client(void * p); 
+	virtual int serve_special_request(int operation, int fd);
+	int solve_request(int fd, char * ip); 
+public:
+	ControlServer();
+	ControlServer(int port, Control * c); 
+	~ControlServer();
+	void setPort(int p); 
+	int getPort(); 
+	void set_control(Control * c);
+	Control * get_control(); 
+	int serving_requests(); 
+	void stop_serving();
+	void set_ip_control(char * nip_control); 
+	char * get_ip_control(); 
+};
+
+
+#define TBUFFER 1000
+
+class DataServer : public Thread {	
+public:
+
+	int fd_s;	
+	int fd_input;	
+	int fd_output;	
+	int port;	
+		
+private:
+	char ip[15];	
+	bool transmitting;	
+	bool serving;	
+	bool client_connected;	
+
+	int connect(); 
+	static void * pthread_servingData(void * p); 
+	static void * pthread_sendData(void * p);
+
+	void initialize(); 
+public:
+	
+
+	volatile bool sending; 
+	pthread_t tid_data;	
+	volatile double buffer[TBUFFER];
+	volatile int beginning, end;
+
+
+
+	void serve_requests();
+	DataServer(); 
+	DataServer(int port); 
+	~DataServer(); 
+	bool servingData(); 
+	bool clientConnected(); 
+	void setPort(int p); 
+	int getPort(); 
+	int serveData(); 
+	void stop_serving(); 
+
+
+	void send(double v); 
+	void send(double v[], int n); 
+	bool bufferFull(); 
+	bool bufferEmpty(); 
+
+};
+
+#endif
