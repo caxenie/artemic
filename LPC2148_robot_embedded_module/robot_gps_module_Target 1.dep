@@ -1,0 +1,2 @@
+Dependencies for Project 'robot_gps_module', Target 'Target 1': (DO NOT MODIFY !)
+F (.\Startup.s)(0x48D88A00)(--device DARMP -g --apcs=interwork -I "C:\Program Files\Keil\ARM\INC\Philips" --list "Startup.lst" --xref -o "Startup.o")

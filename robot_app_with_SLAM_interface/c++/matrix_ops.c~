@@ -1,0 +1,555 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include "matrix_ops.h"
+
+#define NR_END 1
+#define FREE_ARG char*
+
+
+//     Vector Math Functions
+
+
+void vec_copy( m_elem *src, m_elem *dst, int num_elements )
+{
+  int  i;
+
+  for( i = 1; i <= num_elements; i++ )
+    dst[ i ] = src[ i ];
+}
+
+void vec_add( m_elem *a, m_elem *b, m_elem *c, int n )
+{
+  int i;
+  m_elem  *a_ptr, *b_ptr, *c_ptr;
+
+  a_ptr = a + 1;
+  b_ptr = b + 1;
+  c_ptr = c + 1;
+
+  for( i = 1; i <= n; i++)
+    *c_ptr++ = *a_ptr++ + *b_ptr++;
+}
+
+/* vec_sub()
+   This function computes C = A - B, for vects of size n  */
+
+void vec_sub( m_elem *a, m_elem *b, m_elem *c, int n )
+{
+  int i;
+  m_elem  *a_ptr, *b_ptr, *c_ptr;
+
+  a_ptr = a + 1;
+  b_ptr = b + 1;
+  c_ptr = c + 1;
+
+  for( i = 1; i <= n; i++)
+    *c_ptr++ = *a_ptr++ - *b_ptr++;
+}
+
+//  Matrix math functions
+
+
+void mat_add( m_elem **a, m_elem **b, m_elem **c, int m, int n )
+{
+  int i,j;
+  m_elem  *a_ptr, *b_ptr, *c_ptr;
+
+  for( j = 1; j <= m; j++)
+    {
+      a_ptr = &a[j][1];
+      b_ptr = &b[j][1];
+      c_ptr = &c[j][1];
+
+      for( i = 1; i <= n; i++)
+	*c_ptr++ = *a_ptr++ + *b_ptr++;
+    }
+}
+
+
+/* mat_sub()
+   This function computes C = A - B, for matrices of size m x n  */
+
+void mat_sub( m_elem **a, m_elem **b, m_elem **c, int m, int n )
+{
+  int i,j;
+  m_elem  *a_ptr, *b_ptr, *c_ptr;
+
+  for( j = 1; j <= m; j++)
+    {
+      a_ptr = &a[j][1];
+      b_ptr = &b[j][1];
+      c_ptr = &c[j][1];
+
+      for( i = 1; i <= n; i++)
+	*c_ptr++ = *a_ptr++ - *b_ptr++;
+    }
+}
+
+/*  mat_mult
+    This function performs a matrix multiplication.
+*/
+void mat_mult( m_elem **a, m_elem **b, m_elem **c,
+	      int a_rows, int a_cols, int b_cols )
+{
+  int i, j, k;
+  m_elem  *a_ptr;
+  m_elem  temp;
+
+  for( i = 1; i <= a_rows; i++)
+    {
+      a_ptr = &a[i][0];
+      for( j = 1; j <= b_cols; j++ )
+	{
+	  temp = 0.0;
+	  for( k = 1; k <= a_cols; k++ )
+	    temp = temp + (a_ptr[k] * b[k][j]); 
+	  c[i][j] = temp;
+	}
+    }
+}
+
+
+/*  mat_mult_vect
+    This function performs a matrix x vect multiplication.
+*/
+void mat_mult_vect( m_elem **a, m_elem *b, m_elem *c,
+	      int a_rows, int a_cols )
+{
+  int i,k;
+  m_elem  *a_ptr, *b_ptr;
+  m_elem  temp;
+
+  for( i = 1; i <= a_rows; i++)
+    {
+      a_ptr = &a[i][0];
+      b_ptr = &b[1];
+      temp = 0.0;
+
+      for( k = 1; k <= a_cols; k++ )
+	temp += a_ptr[ k ] * *b_ptr++;
+
+      c[i] = temp;
+    }
+}
+
+
+/*  mat_mult_transpose
+    This function performs a matrix multiplication of A x transpose B.
+*/
+void mat_mult_transpose( m_elem **a, m_elem **b, m_elem **c,
+	      int a_rows, int a_cols, int b_cols )
+{
+  int i, j, k;
+  m_elem  *a_ptr, *b_ptr;
+  m_elem  temp;
+
+  for( i = 1; i <= a_rows; i++)
+    {
+      a_ptr = &a[i][0];
+      for( j = 1; j <= b_cols; j++ )
+	{
+	  b_ptr = &b[j][1];
+
+	  temp = (m_elem)0;
+
+	  for( k = 1; k <= a_cols; k++ )
+	    temp += a_ptr[ k ] * *b_ptr++;
+
+	  c[i][j] = temp;
+	}
+    }
+}
+
+/*  mat_transpose_mult
+    This function performs a matrix multiplication of transpose A x B.
+    a_rows refers to the transposed A, is a_cols in actual A storage
+    a_cols is same, is a_rows in actual A storage
+*/
+void mat_transpose_mult( m_elem **A, m_elem **B, m_elem **C,
+	      int a_rows, int a_cols, int b_cols )
+{
+  int i, j, k;
+  m_elem  temp;
+
+  for( i = 1; i <= a_rows; i++)
+    {
+      for( j = 1; j <= b_cols; j++ )
+	{
+	  temp = 0.0;
+
+	  for( k = 1; k <= a_cols; k++ )
+	    temp += A[ k ][ i ] * B[ k ][ j ];
+
+	  C[ i ][ j ] = temp;
+	}
+    }
+}
+
+void mat_copy( m_elem **src, m_elem **dst, int num_rows, int num_cols )
+{
+  int  i, j;
+
+  for( i = 1; i <= num_rows; i++ )
+    for( j = 1; j <= num_cols; j++ )
+      dst[ i ][ j ] = src[ i ][ j ];
+}
+
+
+/* 
+   This function performs gauss-jordan elimination generating the inverse of
+   the A matrix.
+*/
+
+#define SWAP(a,b) {temp=(a);(a)=(b);(b)=temp;}
+
+void gaussj(m_elem **a, int n, m_elem **b, int m)
+{
+  int *indxc,*indxr,*ipiv;
+  int i,icol=0,irow=0,j,k,l,ll;
+  m_elem big,dum,pivinv,temp;
+
+  indxc=ivect(1,n);
+  indxr=ivect(1,n);
+  ipiv=ivect(1,n);
+  for (j=1;j<=n;j++) ipiv[j]=0;
+  for (i=1;i<=n;i++) {
+    big=0.0;
+    for (j=1;j<=n;j++)
+      if (ipiv[j] != 1)
+	for (k=1;k<=n;k++) {
+	  if (ipiv[k] == 0) {
+	    if (fabs(a[j][k]) >= big) {
+	      big=fabs(a[j][k]);
+	      irow=j;
+	      icol=k;
+	    }
+	  } else if (ipiv[k] > 1) printf("non singular matrix...! \n");
+	}
+    ++(ipiv[icol]);
+    if (irow != icol) {
+      for (l=1;l<=n;l++) SWAP(a[irow][l],a[icol][l])
+	for (l=1;l<=m;l++) SWAP(b[irow][l],b[icol][l])
+    }
+    indxr[i]=irow;
+    indxc[i]=icol;
+    if (a[icol][icol] == 0.0) printf("non singular matrix...beware !!\n");
+    pivinv=1.0/a[icol][icol];
+    a[icol][icol]=1.0;
+    for (l=1;l<=n;l++) a[icol][l] *= pivinv;
+    for (l=1;l<=m;l++) b[icol][l] *= pivinv;
+    for (ll=1;ll<=n;ll++)
+      if (ll != icol) {
+	dum=a[ll][icol];
+	a[ll][icol]=0.0;
+	for (l=1;l<=n;l++) a[ll][l] -= a[icol][l]*dum;
+	for (l=1;l<=m;l++) b[ll][l] -= b[icol][l]*dum;
+      }
+  }
+  for (l=n;l>=1;l--) {
+    if (indxr[l] != indxc[l])
+      for (k=1;k<=n;k++)
+	SWAP(a[k][indxr[l]],a[k][indxc[l]]);
+  }
+
+  free_ivect(ipiv,1,n);
+  free_ivect(indxr,1,n);
+  free_ivect(indxc,1,n);
+}
+#undef SWAP
+
+//  Vector and Matrix allocation and deallocation routines
+
+m_elem *vect(long nl, long nh)
+/* allocate a vect with subscript range v[nl..nh] */
+{
+	m_elem *v;
+
+	v=(m_elem *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(m_elem)));
+	if (!v) printf("allocation failure in vect()");
+	return v-nl+NR_END;
+}
+
+float *fvect(long nl, long nh)
+/* allocate a vect with subscript range v[nl..nh] */
+{
+	float *v;
+
+	v=(float *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(float)));
+	if (!v) printf("allocation failure in vect()");
+	return v-nl+NR_END;
+}
+
+int *ivect(long nl, long nh)
+/* allocate an int vect with subscript range v[nl..nh] */
+{
+	int *v;
+
+	v=(int *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(int)));
+	if (!v) printf("allocation failure in ivect()");
+	return v-nl+NR_END;
+}
+
+unsigned char *cvect(long nl, long nh)
+/* allocate an unsigned char vect with subscript range v[nl..nh] */
+{
+	unsigned char *v;
+
+	v=(unsigned char *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(unsigned char)));
+	if (!v) printf("allocation failure in cvect()");
+	return v-nl+NR_END;
+}
+
+unsigned long *lvect(long nl, long nh)
+/* allocate an unsigned long vect with subscript range v[nl..nh] */
+{
+	unsigned long *v;
+
+	v=(unsigned long *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(long)));
+	if (!v) printf("allocation failure in lvect()");
+	return v-nl+NR_END;
+}
+
+double *dvect(long nl, long nh)
+/* allocate a double vect with subscript range v[nl..nh] */
+{
+	double *v;
+
+	v=(double *)malloc((size_t) ((nh-nl+1+NR_END)*sizeof(double)));
+	if (!v) printf("allocation failure in dvect()");
+	return v-nl+NR_END;
+}
+
+m_elem **matrix(long nrl, long nrh, long ncl, long nch)
+/* allocate a m_elem matrix with subscript range m[nrl..nrh][ncl..nch] */
+{
+	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
+	m_elem **m;
+
+	/* allocate pointers to rows */
+	m=(m_elem **)malloc((size_t)((nrow+NR_END)
+					    *sizeof(m_elem *)));
+	if (!m) printf("allocation failure 1 in matrix()");
+	m += NR_END;
+	m -= nrl;
+
+	/* allocate rows and set pointers to them */
+	m[nrl]=(m_elem *)malloc((size_t)((nrow*ncol+NR_END) 
+					       *sizeof(m_elem)));
+	if (!m[nrl]) printf("allocation failure 2 in matrix()");
+	m[nrl] += NR_END;
+	m[nrl] -= ncl;
+
+	for(i=nrl+1;i<=nrh;i++) m[i]=m[i-1]+ncol;
+
+	/* return pointer to array of pointers to rows */
+	return m;
+}
+
+
+float **fmatrix(long nrl, long nrh, long ncl, long nch)
+/* allocate a float matrix with subscript range m[nrl..nrh][ncl..nch] */
+{
+	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
+	float **m;
+
+	/* allocate pointers to rows */
+	m=(float **) malloc((size_t)((nrow+NR_END)*sizeof(float*)));
+	if (!m) printf("allocation failure 1 in matrix()");
+	m += NR_END;
+	m -= nrl;
+
+	/* allocate rows and set pointers to them */
+	m[nrl]=(float *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(float)));
+	if (!m[nrl]) printf("allocation failure 2 in matrix()");
+	m[nrl] += NR_END;
+	m[nrl] -= ncl;
+
+	for(i=nrl+1;i<=nrh;i++) m[i]=m[i-1]+ncol;
+
+	/* return pointer to array of pointers to rows */
+	return m;
+}
+
+double **dmatrix(long nrl, long nrh, long ncl, long nch)
+/* allocate a double matrix with subscript range m[nrl..nrh][ncl..nch] */
+{
+	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
+	double **m;
+
+	/* allocate pointers to rows */
+	m=(double **) malloc((size_t)((nrow+NR_END)*sizeof(double*)));
+	if (!m) printf("allocation failure 1 in matrix()");
+	m += NR_END;
+	m -= nrl;
+
+	/* allocate rows and set pointers to them */
+	m[nrl]=(double *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(double)));
+	if (!m[nrl]) printf("allocation failure 2 in matrix()");
+	m[nrl] += NR_END;
+	m[nrl] -= ncl;
+
+	for(i=nrl+1;i<=nrh;i++) m[i]=m[i-1]+ncol;
+
+	/* return pointer to array of pointers to rows */
+	return m;
+}
+
+int **imatrix(long nrl, long nrh, long ncl, long nch)
+/* allocate a int matrix with subscript range m[nrl..nrh][ncl..nch] */
+{
+	long i, nrow=nrh-nrl+1,ncol=nch-ncl+1;
+	int **m;
+
+	/* allocate pointers to rows */
+	m=(int **) malloc((size_t)((nrow+NR_END)*sizeof(int*)));
+	if (!m) printf("allocation failure 1 in matrix()");
+	m += NR_END;
+	m -= nrl;
+
+
+	/* allocate rows and set pointers to them */
+	m[nrl]=(int *) malloc((size_t)((nrow*ncol+NR_END)*sizeof(int)));
+	if (!m[nrl]) printf("allocation failure 2 in matrix()");
+	m[nrl] += NR_END;
+	m[nrl] -= ncl;
+
+	for(i=nrl+1;i<=nrh;i++) m[i]=m[i-1]+ncol;
+
+	/* return pointer to array of pointers to rows */
+	return m;
+}
+
+m_elem **convert_matrix(m_elem *a,
+			      long nrl, long nrh, long ncl, long nch)
+/* allocate a m_elem matrix m[nrl..nrh][ncl..nch] that points
+to the matrix declared in the standard C manner as a[nrow][ncol], where
+nrow=nrh-nrl+1 and ncol=nch-ncl+1. The routine should be called with the
+address &a[0][0] as the first argument. */
+{
+	long i,j,nrow=nrh-nrl+1,ncol=nch-ncl+1;
+	m_elem **m;
+
+	/* allocate pointers to rows */
+	m=(m_elem **)malloc((size_t)((nrow+NR_END)
+					   *sizeof(m_elem*)));
+	if (!m) printf("allocation failure in convert_matrix()");
+	m += NR_END;
+	m -= nrl;
+
+	/* set pointers to rows */
+	m[nrl]=a-ncl;
+	for(i=1,j=nrl+1;i<nrow;i++,j++) m[j]=m[j-1]+ncol;
+	/* return pointer to array of pointers to rows */
+	return m;
+}
+
+void free_vect(m_elem *v, long nl, long nh)
+/* free a vect allocated with vect() */
+{
+	free((FREE_ARG) (v+nl-NR_END));
+}
+
+void free_fvect(float *v, long nl, long nh)
+/* free a float vect allocated with fvect() */
+{
+	free((FREE_ARG) (v+nl-NR_END));
+}
+
+void free_ivect(int *v, long nl, long nh)
+/* free an int vect allocated with ivect() */
+{
+	free((FREE_ARG) (v+nl-NR_END));
+}
+
+void free_cvect(unsigned char *v, long nl, long nh)
+/* free an unsigned char vect allocated with cvect() */
+{
+	free((FREE_ARG) (v+nl-NR_END));
+}
+
+void free_lvect(unsigned long *v, long nl, long nh)
+/* free an unsigned long vect allocated with lvect() */
+{
+	free((FREE_ARG) (v+nl-NR_END));
+}
+
+void free_dvect(double *v, long nl, long nh)
+/* free a double vect allocated with dvect() */
+{
+	free((FREE_ARG) (v+nl-NR_END));
+}
+
+void free_matrix(m_elem  **m, long nrl, long nrh, long ncl, long nch)
+/* free a matrix allocated by matrix() */
+{
+	free((FREE_ARG) (m[nrl]+ncl-NR_END));
+	free((FREE_ARG) (m+nrl-NR_END));
+}
+
+void free_fmatrix(float **m, long nrl, long nrh, long ncl, long nch)
+/* free a float matrix allocated by fmatrix() */
+{
+	free((FREE_ARG) (m[nrl]+ncl-NR_END));
+	free((FREE_ARG) (m+nrl-NR_END));
+}
+
+void free_dmatrix(double **m, long nrl, long nrh, long ncl, long nch)
+/* free a double matrix allocated by dmatrix() */
+{
+	free((FREE_ARG) (m[nrl]+ncl-NR_END));
+	free((FREE_ARG) (m+nrl-NR_END));
+}
+
+void free_imatrix(int **m, long nrl, long nrh, long ncl, long nch)
+/* free an int matrix allocated by imatrix() */
+{
+	free((FREE_ARG) (m[nrl]+ncl-NR_END));
+	free((FREE_ARG) (m+nrl-NR_END));
+}
+
+void free_convert_matrix(float **b, long nrl, long nrh, long ncl, long nch)
+/* free a matrix allocated by convert_matrix() */
+{
+	free((FREE_ARG) (b+nrl-NR_END));
+}
+
+//  Matrix and Vector Printing routines
+
+void print_vect( char *str, m_elem *x, int n )
+{
+  int     i;
+
+  printf( "%s:\n", str );
+  for( i = 1; i <= n; i++ )
+    {
+      if( (x[ i ] > 1) && (x[i] < 999) )
+	printf( " %3.1lf", x[ i ] );
+      else
+	printf( " %2.2lg", x[ i ] );
+    }
+  printf( "\n" );
+}
+
+
+void print_matrix( char *str, m_elem **A, int m, int n )
+{
+  int     i, j;
+
+  printf( "%s:  (%d x %d)\n", str, m, n );
+  for( i = 1; i <= m; i++ )
+    {
+      printf( ">" );
+      for( j = 1; j <= n; j++ )
+	{
+	  printf( " %2.2lg", A[ i ][ j ] );
+	}
+      printf( "\n" );
+    }
+}
+
+void take_inverse( m_elem **in, m_elem **out, int n )
+{
+  gaussj( in, n, out, 0 );  
+  mat_copy( in, out, n, n );
+}

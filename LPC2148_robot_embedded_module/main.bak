@@ -1,0 +1,102 @@
+/* Calculul si extragerea informatiei de pozitie din packetele GPS 
+ * si interfatarea cu senzorii ultrasonici pentru maparea mediului 
+ * si localizare
+ */
+#include <math.h>
+#include<lpc214x.h>
+#include "serial.h"
+#include "gps_odometry.h"
+#include "sonar_interface.h"
+#include "accelerometer_interface.h"
+
+/* program principal */
+
+extern char rxbuf[256];   // bufferul RX
+extern char txbuf[256];	  // bufferul TX 
+extern char rxdata;		  // caracterul primit in bufferul RX
+extern int idx; 	      // pointer catre elementul curent din buffer RX
+extern int rbfull;        // var care retine starea bufferului de receptie
+int state; 			      // implementare tranzitie stari pe receptie (automat finit)
+int cnt;				  // counter auxiliar (test buffer full)
+int rx_cnt;			  	  // counter auxiliar RX
+int is_origin_set;	      // stare setare origine, initial nesetata (val. 0)
+int is_valid_packet;	  // test daca pachetul este valid 
+int is_gpgll;			  // test daca pachetul este de tip GPGLL
+int is_active;            // test daca pachetul este active (A) sau void (V)
+int s1val = 0, s2val = 0, s3val = 0, s4val = 0, s5val = 0; // valori medie 
+int i = 0; // index mediere valori citite de la ADC
+int div = 5; // nr de citiri pentru mediere ; ex div = 5
+
+int main(void){
+     /* initializare bucla pll, acces memorie ... */
+	 init_system();
+   	 /* initializare uart0/1 */
+	 init_uart0();
+	 init_uart1();
+	 /* init var */ 
+	 idx = 0;
+	 rbfull = 0;
+	 rx_cnt = 0;
+	 /* initializari modul GPS */
+	 is_origin_set = 0;
+	 state = 0;
+	 is_valid_packet = 0;
+	 
+ // initializarea convertoareloe ADC
+ init_adc();
+ // activare lant de sonare (BW=1)
+ enable_sonar_chain();
+ // bucla principala a aplicatiei
+ while(1){
+       // strobare pentru citire inlantuita a sonarelor
+	   IO1SET |= (1<<21);
+ 	   delay_us(50);
+       IO1CLR |= (1<<21);
+	   delay_us(50); 
+	   format_sonar_data_and_send(read_sonar(1));
+	   format_sonar_data_and_send(read_sonar(2));
+	   format_sonar_data_and_send(read_sonar(3));
+	    format_sonar_data_and_send(read_sonar(4));
+		format_sonar_data_and_send(read_sonar(5));
+	   putchar_uart0(0x0D);
+#if 0
+	   /* contor sumare mediere */
+	   i++;
+	   /* citirea valorilor de la sonare */
+	   s1val += read_sonar(1);
+	   s2val += read_sonar(2);
+	   s3val += read_sonar(3);
+	   s4val += read_sonar(4);
+	   s5val += read_sonar(5);
+	   if(i%div==0){
+	   /*impachetarea formatata a valorilor */
+	   putchar_uart0('>');
+	   putchar_uart0(',');
+	   /* sumeaza div valori si mediaza */	   
+	   format_sonar_data_and_send(s1val/div);
+	   format_sonar_data_and_send(s2val/div);
+	   format_sonar_data_and_send(s3val/div);
+	   format_sonar_data_and_send(s4val/div);
+	   format_sonar_data_and_send(s5val/div);
+
+	   putchar_uart0(0x0D); // trimite CR
+	   /* resetare valori  */
+	   s1val = s2val = s3val = s4val = s5val = 0;
+	   }
+#endif
+	 /* cat timp primim date de la modulul GPS pe UART1 
+	    se preiau si se transmit pe uart0 evitand 
+		overflow pe buffer
+      */
+/*
+	 while((rxbuf[idx]=(char)getchar_uart1())!=0){
+	    if(rxbuf[idx]=='L'){
+	 		txbuf[idx] = rxbuf[idx];
+			putchar_uart0(txbuf[idx]);
+			if(idx==255)idx=0;
+		  }
+		}
+	putchar_uart0(0x0D); // trimite CR
+*/
+  }	 // end while
+} // end main

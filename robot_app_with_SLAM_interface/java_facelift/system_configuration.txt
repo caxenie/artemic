@@ -1,0 +1,10 @@
+
+
+// parametrization START V11MIN V11MAX T1_M1 T2_M1 T3_M1 T4_M1 V12MIN V12MAX T1_M2 T2_M2 T3_M2 T4_M2 ERROR
+param 0.0 5.0 10.0 5.0 5.0 5.0 5.0 5.0 10.0 5.0 5.0 5.0 5.0 0.0
+
+// execute serial phase twice
+fase 0 2
+
+// execute parallel phase twice
+fase 1 2

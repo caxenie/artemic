@@ -1,0 +1,88 @@
+// specific matrix computations library
+// pointer based operations
+
+typedef double m_elem;
+
+//   Vector math routines    
+
+//  vect B = vect A, of size num_elements  
+extern void vec_copy( m_elem *src, m_elem *dst, int num_elements );
+
+//  vect C = vect A + vect B , both of size n   
+extern void vec_add( m_elem *A, m_elem *B, m_elem *C, int n );
+
+//  vect C = vect A - vect B , both of size n   
+extern void vec_sub( m_elem *A, m_elem *B, m_elem *C, int n );
+
+extern void print_vect( char *str, m_elem *x, int n );
+
+// Matrix math routines
+
+//  matrix B = matrix A, of size num_rows x num_cols  
+extern void mat_copy( m_elem **A, m_elem **B, int num_rows,
+			int num_cols );
+
+//  matrix C = matrix A + matrix B , both of size m x n   
+extern void mat_add( m_elem **A, m_elem **B, m_elem **C, int m, int n );
+
+//  matrix C = matrix A - matrix B , all of size m x n  
+extern void mat_sub( m_elem **A, m_elem **B, m_elem **C, int m, int n );
+
+//  matrix C = matrix A x matrix B , A(a_rows x a_cols), B(a_cols x b_cols) 
+extern void mat_mult( m_elem **A, m_elem **B, m_elem **C,
+		     int a_rows, int a_cols, int b_cols );
+
+//  matrix C = matrix A x vect B , A(a_rows x a_cols), B(a_cols x 1) 
+extern void mat_mult_vect( m_elem **A, m_elem *B, m_elem *C,
+			    int a_rows, int a_cols );
+
+//  C = matrix A x trans( matrix B ), A(a_rows x a_cols), B(b_cols x a_cols) 
+extern void mat_mult_transpose( m_elem **A, m_elem **B, m_elem **C,
+			   int a_rows, int a_cols, int b_cols );
+
+//  C = trans( matrix A ) x matrix B, A(a_cols x a_rows), B(a_cols x b_cols) 
+extern void mat_transpose_mult( m_elem **A, m_elem **B, m_elem **C,
+			   int a_rows, int a_cols, int b_cols );
+
+// print to console
+extern void print_matrix( char *str, m_elem **A, int m, int n );
+
+// used in matrix inversion
+extern void gaussj( m_elem **A, int n, m_elem **B, int m );
+
+// inverse
+extern void take_inverse( m_elem **in, m_elem **out, int n );
+
+// Vector allocation routines 
+
+extern m_elem *vect(long nl, long nh);
+extern int *ivect(long nl, long nh);
+extern unsigned char *cvect(long nl, long nh);
+extern unsigned long *lvect(long nl, long nh);
+extern float *fvect(long nl, long nh);
+extern double *dvect(long nl, long nh);
+
+//   Matrix allocation routines 
+
+extern m_elem **matrix(long nrl, long nrh, long ncl, long nch);
+extern float **fmatrix(long nrl, long nrh, long ncl, long nch);
+extern double **dmatrix(long nrl, long nrh, long ncl, long nch);
+extern int **imatrix(long nrl, long nrh, long ncl, long nch);
+
+extern m_elem **convert_matrix( m_elem *a, long nrl, long nrh,
+			      long ncl, long nch);
+
+//  Deallocation routines 
+
+extern void free_vect(m_elem *v, long nl, long nh);
+extern void free_fvect(float *v, long nl, long nh);
+extern void free_ivect(int *v, long nl, long nh);
+extern void free_cvect(unsigned char *v, long nl, long nh);
+extern void free_lvect(unsigned long *v, long nl, long nh);
+extern void free_dvect(double *v, long nl, long nh);
+
+extern void free_matrix(m_elem **m, long nrl, long nrh, long ncl, long nch);
+extern void free_fmatrix(float **m, long nrl, long nrh, long ncl, long nch);
+extern void free_dmatrix(double **m, long nrl, long nrh, long ncl, long nch);
+extern void free_imatrix(int **m, long nrl, long nrh, long ncl, long nch);
+extern void free_convert_matrix(float **b, long nrl, long nrh, long ncl, long nch);

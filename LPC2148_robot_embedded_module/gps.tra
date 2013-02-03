@@ -1,0 +1,26 @@
+*** Creating Trace Output File 'gps.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '"startup.o"'
+### List of Objects: adding '"serial.o"'
+### List of Objects: adding '"main.o"'
+### List of Objects: adding '"gps_odometry.o"'
+### List of Objects: adding '"global_adc_init.o"'
+### List of Objects: adding '"sonar_interface.o"'
+### List of Objects: adding '"accelerometer_interface.o"'
+### List of Objects: adding '"mapper.o"'
+### ADS-LD Command completed:
+"startup.o" "serial.o" "main.o" "gps_odometry.o" "global_adc_init.o" "sonar_interface.o" "accelerometer_interface.o" "mapper.o" --device DARMP --strict --scatter "gps.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\gps.map" -o "gps.axf"### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: 'gps.axf'
+### ADS-LD Command File: 'gps.lnp'
+### Checking for dirty Components...
+### Creating CmdFile 'gps.lnp', Handle=0x000002A8
+### Writing '.lnp' file
+### ADS-LD Command file 'gps.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.

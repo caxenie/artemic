@@ -1,0 +1,485 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html><head>
+<title>Static Call Graph - [D:\school_stuff_and_work\DIZERTATIE\modul_sonare_GPS\test\gps.axf]</title></head>
+<body><HR>
+<H1>Static Call Graph for image D:\school_stuff_and_work\DIZERTATIE\modul_sonare_GPS\test\gps.axf</H1><HR>
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, RVCT3.1 [Build 939]: Last Updated: Sun Mar 06 21:06:07 2011
+<BR><P>
+<H3>Maximum Stack Usage =         64 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+Call chain for Maximum Stack Depth:</H3>
+__main &rArr; __rt_entry &rArr; __rt_lib_init &rArr; _fp_init
+<P>
+<H3>
+Functions with no stack information
+</H3><UL>
+ <LI><a href="#[b520d8]">Reset_Handler</a>
+ <LI><a href="#[b52120]">__user_initial_stackheap</a>
+ <LI><a href="#[b523a8]">Undef_Handler</a>
+ <LI><a href="#[b52360]">SWI_Handler</a>
+ <LI><a href="#[b52318]">PAbt_Handler</a>
+ <LI><a href="#[b522d0]">DAbt_Handler</a>
+ <LI><a href="#[b52288]">IRQ_Handler</a>
+ <LI><a href="#[b52240]">FIQ_Handler</a>
+</UL>
+</UL>
+<P>
+<H3>
+Mutually Recursive functions
+</H3> <LI><a href="#[b523a8]">Undef_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[b523a8]">Undef_Handler</a><BR>
+ <LI><a href="#[b52360]">SWI_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[b52360]">SWI_Handler</a><BR>
+ <LI><a href="#[b52318]">PAbt_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[b52318]">PAbt_Handler</a><BR>
+ <LI><a href="#[b522d0]">DAbt_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[b522d0]">DAbt_Handler</a><BR>
+ <LI><a href="#[b52288]">IRQ_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[b52288]">IRQ_Handler</a><BR>
+ <LI><a href="#[b52240]">FIQ_Handler</a>&nbsp;&nbsp;&nbsp;&rArr;&nbsp;&nbsp;&nbsp;<a href="#[b52240]">FIQ_Handler</a><BR>
+</UL>
+<P>
+<H3>
+Function Pointers
+</H3><UL>
+ <LI><a href="#[b520d8]">Reset_Handler</a>
+ <LI><a href="#[b523a8]">Undef_Handler</a>
+ <LI><a href="#[b52360]">SWI_Handler</a>
+ <LI><a href="#[b52318]">PAbt_Handler</a>
+ <LI><a href="#[b522d0]">DAbt_Handler</a>
+ <LI><a href="#[b52288]">IRQ_Handler</a>
+ <LI><a href="#[b52240]">FIQ_Handler</a>
+ <LI><a href="#[b49f00]">__main</a>
+ <LI><a href="#[b44100]">__ARM_get_argv</a>
+ <LI><a href="#[b4fea8]">main</a>
+ <LI><a href="#[b44e68]">__I_use_semihosting</a>
+</UL>
+<P>
+<H3>
+Global Symbols
+</H3>
+<P><STRONG><a name="[b520d8]"></a>Reset_Handler</STRONG> (ARM, 0 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL>
+<P><STRONG><a name="[b49f00]"></a>__main</STRONG> (ARM, 8 bytes, Stack size 0 bytes, __main.o(!!!main))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64 + Unknown Stack Size
+<LI>Call Chain = __main &rArr; __rt_entry &rArr; __rt_lib_init &rArr; _fp_init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b48480]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+<LI><a href="#[1043420]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
+</UL>
+
+<P><STRONG><a name="[1043420]"></a>__scatterload</STRONG> (ARM, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter))
+<BR><BR>[Called By]<UL><LI><a href="#[b49f00]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+</UL>
+
+<P><STRONG><a name="[10433d8]"></a>__scatterload_rt2</STRONG> (ARM, 52 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b48480]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+</UL>
+
+<P><STRONG><a name="[1043390]"></a>__scatterload_null</STRONG> (ARM, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
+
+<P><STRONG><a name="[1043150]"></a>__scatterload_copy</STRONG> (ARM, 40 bytes, Stack size unknown bytes, __scatter_copy.o(!!handler_copy), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[1043150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_copy
+</UL>
+<BR>[Called By]<UL><LI><a href="#[1043150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_copy
+</UL>
+
+<P><STRONG><a name="[1042fe8]"></a>__scatterload_zeroinit</STRONG> (ARM, 44 bytes, Stack size unknown bytes, __scatter_zi.o(!!handler_zi), UNUSED)
+
+<P><STRONG><a name="[b46250]"></a>__ARM_argv_veneer</STRONG> (ARM, 16 bytes, Stack size 0 bytes, lib_init.o(.emb_text))
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (via Veneer)
+</UL>
+
+<P><STRONG><a name="[b52120]"></a>__user_initial_stackheap</STRONG> (ARM, 0 bytes, Stack size unknown bytes, startup.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b47e58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
+</UL>
+
+<P><STRONG><a name="[b51668]"></a>get_proc_clk</STRONG> (ARM, 88 bytes, Stack size 0 bytes, serial.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b51620]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_peripheral_clk
+</UL>
+
+<P><STRONG><a name="[b51620]"></a>get_peripheral_clk</STRONG> (ARM, 104 bytes, Stack size 16 bytes, serial.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = get_peripheral_clk &rArr; __aeabi_idivmod
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b4aec8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
+<LI><a href="#[b51668]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_proc_clk
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b51590]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_uart1
+<LI><a href="#[b515d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_uart0
+</UL>
+
+<P><STRONG><a name="[b515d8]"></a>init_uart0</STRONG> (ARM, 88 bytes, Stack size 16 bytes, serial.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = init_uart0 &rArr; get_peripheral_clk &rArr; __aeabi_idivmod
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b4aec8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
+<LI><a href="#[b51620]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_peripheral_clk
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b4fea8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[b51590]"></a>init_uart1</STRONG> (ARM, 88 bytes, Stack size 16 bytes, serial.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = init_uart1 &rArr; get_peripheral_clk &rArr; __aeabi_idivmod
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b4aec8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
+<LI><a href="#[b51620]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_peripheral_clk
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b4fea8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[b51548]"></a>putchar_uart0</STRONG> (ARM, 80 bytes, Stack size 0 bytes, serial.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b4fea8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[b51398]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_send_ascii
+</UL>
+
+<P><STRONG><a name="[b51500]"></a>putchar_uart1</STRONG> (ARM, 80 bytes, Stack size 0 bytes, serial.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b51350]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart1_send_ascii
+</UL>
+
+<P><STRONG><a name="[b514b8]"></a>getchar_uart0</STRONG> (ARM, 32 bytes, Stack size 0 bytes, serial.o(.text), UNUSED)
+
+<P><STRONG><a name="[b51470]"></a>getchar_uart1</STRONG> (ARM, 32 bytes, Stack size 0 bytes, serial.o(.text), UNUSED)
+
+<P><STRONG><a name="[b51428]"></a>ascii_convert0</STRONG> (ARM, 152 bytes, Stack size 0 bytes, serial.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b51398]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_send_ascii
+</UL>
+
+<P><STRONG><a name="[b513e0]"></a>ascii_convert1</STRONG> (ARM, 152 bytes, Stack size 0 bytes, serial.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b51350]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart1_send_ascii
+</UL>
+
+<P><STRONG><a name="[b51398]"></a>uart0_send_ascii</STRONG> (ARM, 48 bytes, Stack size 4 bytes, serial.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = uart0_send_ascii
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b51428]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ascii_convert0
+<LI><a href="#[b51548]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;putchar_uart0
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b4fea8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[b51350]"></a>uart1_send_ascii</STRONG> (ARM, 48 bytes, Stack size 4 bytes, serial.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b513e0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ascii_convert1
+<LI><a href="#[b51500]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;putchar_uart1
+</UL>
+
+<P><STRONG><a name="[b4fea8]"></a>main</STRONG> (ARM, 136 bytes, Stack size 16 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = main &rArr; init_uart1 &rArr; get_peripheral_clk &rArr; __aeabi_idivmod
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b4fd88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;read_adc0
+<LI><a href="#[b4fe18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_adc
+<LI><a href="#[b51398]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart0_send_ascii
+<LI><a href="#[b51548]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;putchar_uart0
+<LI><a href="#[b51590]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_uart1
+<LI><a href="#[b515d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_uart0
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> kernel.o(.text)
+</UL>
+<P><STRONG><a name="[b4fe18]"></a>init_adc</STRONG> (ARM, 88 bytes, Stack size 0 bytes, global_adc_init.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b4fea8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[b4fd88]"></a>read_adc0</STRONG> (ARM, 252 bytes, Stack size 0 bytes, global_adc_init.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b4fea8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+</UL>
+
+<P><STRONG><a name="[b4dd58]"></a>read_adc1</STRONG> (ARM, 244 bytes, Stack size 0 bytes, global_adc_init.o(.text), UNUSED)
+
+<P><STRONG><a name="[b4dd10]"></a>delay_ms</STRONG> (ARM, 48 bytes, Stack size 0 bytes, global_adc_init.o(.text), UNUSED)
+
+<P><STRONG><a name="[b4af10]"></a>__aeabi_idiv</STRONG> (ARM, 0 bytes, Stack size 8 bytes, aeabi_sdiv.o(.text), UNUSED)
+
+<P><STRONG><a name="[b4aec8]"></a>__aeabi_idivmod</STRONG> (ARM, 384 bytes, Stack size 8 bytes, aeabi_sdiv.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_idivmod
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b51590]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_uart1
+<LI><a href="#[b515d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;init_uart0
+<LI><a href="#[b51620]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_peripheral_clk
+</UL>
+
+<P><STRONG><a name="[b4a1d0]"></a>__use_two_region_memory</STRONG> (ARM, 4 bytes, Stack size 0 bytes, stkheap2.o(.text), UNUSED)
+
+<P><STRONG><a name="[b4a188]"></a>__rt_stackheap_init</STRONG> (ARM, 36 bytes, Stack size 16 bytes, stkheap2.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24 + Unknown Stack Size
+<LI>Call Chain = __rt_stackheap_init &rArr; __user_setup_stackheap
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b476c8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_stackheap_storage
+<LI><a href="#[b47e58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b48480]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+</UL>
+
+<P><STRONG><a name="[b4a140]"></a>__rt_heap_extend</STRONG> (ARM, 24 bytes, Stack size 8 bytes, stkheap2.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b4a068]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_heap_extend (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b48480]"></a>__rt_entry</STRONG> (ARM, 76 bytes, Stack size 16 bytes, kernel.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 64 + Unknown Stack Size
+<LI>Call Chain = __rt_entry &rArr; __rt_lib_init &rArr; _fp_init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b45638]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_platform_post_lib_init
+<LI><a href="#[b457a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_platform_post_stackheap_init
+<LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (via Veneer)
+<LI><a href="#[b46640]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit (via BX)
+<LI><a href="#[b4a188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_stackheap_init
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b49f00]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__main
+<LI><a href="#[10433d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload_rt2
+</UL>
+
+<P><STRONG><a name="[b48438]"></a>__rt_exit</STRONG> (ARM, 20 bytes, Stack size 8 bytes, kernel.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __rt_exit &rArr; __rt_lib_shutdown
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b46178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown (via Veneer)
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b46640]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit (via Veneer)
+</UL>
+
+<P><STRONG><a name="[b483f0]"></a>__rt_abort</STRONG> (ARM, 8 bytes, Stack size 0 bytes, kernel.o(.text), UNUSED)
+<BR><BR>[Calls]<UL><LI><a href="#[b46d18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
+</UL>
+
+<P><STRONG><a name="[b47e58]"></a>__user_setup_stackheap</STRONG> (ARM, 96 bytes, Stack size 8 bytes, sys_stackheap_outer.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8 + Unknown Stack Size
+<LI>Call Chain = __user_setup_stackheap
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b46a40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_perproc_libspace
+<LI><a href="#[b52120]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_initial_stackheap
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b4a188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_stackheap_init
+</UL>
+
+<P><STRONG><a name="[b476c8]"></a>__rt_stackheap_storage</STRONG> (ARM, 12 bytes, Stack size 0 bytes, rt_stackheap_storage_intlibspace.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b4a188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_stackheap_init
+</UL>
+
+<P><STRONG><a name="[b46d18]"></a>_sys_exit</STRONG> (ARM, 20 bytes, Stack size 0 bytes, sys_exit.o(.text), UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b483f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_abort
+</UL>
+
+<P><STRONG><a name="[b46a88]"></a>__user_libspace</STRONG> (ARM, 8 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+
+<P><STRONG><a name="[b46a40]"></a>__user_perproc_libspace</STRONG> (ARM, 0 bytes, Stack size 0 bytes, libspace.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b47e58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
+</UL>
+
+<P><STRONG><a name="[b469f8]"></a>__user_perthread_libspace</STRONG> (ARM, 0 bytes, Stack size 0 bytes, libspace.o(.text), UNUSED)
+
+<P><STRONG><a name="[b46640]"></a>exit</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, exit.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = exit &rArr; __rt_exit &rArr; __rt_lib_shutdown
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b465b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_call_atexit_fns (Weak Reference)
+<LI><a href="#[b48438]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit (via Veneer)
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b48480]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+</UL>
+
+<P><STRONG><a name="[b461c0]"></a>__rt_lib_init</STRONG> (Thumb, 184 bytes, Stack size 40 bytes, lib_init.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = __rt_lib_init &rArr; _fp_init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b43e20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_init (via Veneer)
+<LI><a href="#[b44ab0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_locale (via Veneer)
+<LI><a href="#[b45b90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_signal_init (Weak Reference)
+<LI><a href="#[b45bd8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_rand_init (Weak Reference)
+<LI><a href="#[b45c20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_initio (Weak Reference)
+<LI><a href="#[b45c68]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_init_user_alloc (Weak Reference)
+<LI><a href="#[b45cb0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_init_alloc (Weak Reference)
+<LI><a href="#[b45cf8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_getenv_init (Weak Reference)
+<LI><a href="#[b45d40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_get_lc_time (Weak Reference)
+<LI><a href="#[b45d88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_get_lc_numeric (Weak Reference)
+<LI><a href="#[b45dd0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_get_lc_monetary (Weak Reference)
+<LI><a href="#[b45e18]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_get_lc_ctype (Weak Reference)
+<LI><a href="#[b45e60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_get_lc_collate (Weak Reference)
+<LI><a href="#[b45ea8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_trap_init (Weak Reference)
+<LI><a href="#[b45ef0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_clock_init (Weak Reference)
+<LI><a href="#[b45f38]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_atexit_init (Weak Reference)
+<LI><a href="#[b45fc8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__cpp_initialize__aeabi_ (Weak Reference)
+<LI><a href="#[b46010]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__alloca_initialize (Weak Reference)
+<LI><a href="#[b46058]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__Heap_DescSize (Weak Reference)
+<LI><a href="#[b460a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_exceptions_init (Weak Reference)
+<LI><a href="#[b46250]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_argv_veneer (via Veneer)
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b48480]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry (via Veneer)
+</UL>
+
+<P><STRONG><a name="[b46178]"></a>__rt_lib_shutdown</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, lib_init.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __rt_lib_shutdown
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b45b00]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_terminateio (Weak Reference)
+<LI><a href="#[b45b48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_terminate_user_alloc (Weak Reference)
+<LI><a href="#[b45f80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__cxa_finalize (Weak Reference)
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b48438]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit (via Veneer)
+</UL>
+
+<P><STRONG><a name="[b457a8]"></a>_platform_post_stackheap_init</STRONG> (ARM, 12 bytes, Stack size 0 bytes, boardinit2.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b48480]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+</UL>
+
+<P><STRONG><a name="[b45638]"></a>_platform_post_lib_init</STRONG> (ARM, 16 bytes, Stack size 8 bytes, boardinit3.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = _platform_post_lib_init
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b48480]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry
+</UL>
+
+<P><STRONG><a name="[b44e68]"></a>__I_use_semihosting</STRONG> (ARM, 0 bytes, Stack size 0 bytes, use_no_semi.o(.text))
+<BR>[Address Reference Count : 1]<UL><LI> sys_exit.o(.text)
+</UL>
+<P><STRONG><a name="[b44e20]"></a>__use_no_semihosting_swi</STRONG> (ARM, 4 bytes, Stack size 0 bytes, use_no_semi.o(.text), UNUSED)
+
+<P><STRONG><a name="[b44ab0]"></a>__rt_locale</STRONG> (ARM, 12 bytes, Stack size 0 bytes, rt_locale_intlibspace.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (via Veneer)
+</UL>
+
+<P><STRONG><a name="[b44100]"></a>__ARM_get_argv</STRONG> (Thumb, 6 bytes, Stack size 4 bytes, no_argv.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = __ARM_get_argv
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> lib_init.o(.emb_text)
+</UL>
+<P><STRONG><a name="[b436d0]"></a>__rt_fp_status_addr</STRONG> (ARM, 12 bytes, Stack size 0 bytes, rt_fp_status_addr_intlibspace.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[b43e20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_fp_init
+</UL>
+
+<P><STRONG><a name="[b43e20]"></a>_fp_init</STRONG> (ARM, 24 bytes, Stack size 8 bytes, fpinit.o(x$fpl$fpinit))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = _fp_init
+</UL>
+<BR>[Calls]<UL><LI><a href="#[b436d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_fp_status_addr
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (via Veneer)
+</UL>
+
+<P><STRONG><a name="[b43dd8]"></a>__fplib_config_pureend_doubles</STRONG> (ARM, 0 bytes, Stack size unknown bytes, fpinit.o(x$fpl$fpinit), UNUSED)
+<P>
+<H3>
+Local Symbols
+</H3>
+<P><STRONG><a name="[b523a8]"></a>Undef_Handler</STRONG> (ARM, 4 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR><BR>[Calls]<UL><LI><a href="#[b523a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Undef_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b523a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Undef_Handler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL>
+<P><STRONG><a name="[b52360]"></a>SWI_Handler</STRONG> (ARM, 4 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR><BR>[Calls]<UL><LI><a href="#[b52360]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SWI_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b52360]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SWI_Handler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL>
+<P><STRONG><a name="[b52318]"></a>PAbt_Handler</STRONG> (ARM, 4 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR><BR>[Calls]<UL><LI><a href="#[b52318]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PAbt_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b52318]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;PAbt_Handler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL>
+<P><STRONG><a name="[b522d0]"></a>DAbt_Handler</STRONG> (ARM, 4 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR><BR>[Calls]<UL><LI><a href="#[b522d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DAbt_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b522d0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DAbt_Handler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL>
+<P><STRONG><a name="[b52288]"></a>IRQ_Handler</STRONG> (ARM, 4 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR><BR>[Calls]<UL><LI><a href="#[b52288]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IRQ_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b52288]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;IRQ_Handler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL>
+<P><STRONG><a name="[b52240]"></a>FIQ_Handler</STRONG> (ARM, 4 bytes, Stack size unknown bytes, startup.o(RESET))
+<BR><BR>[Calls]<UL><LI><a href="#[b52240]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FIQ_Handler
+</UL>
+<BR>[Called By]<UL><LI><a href="#[b52240]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FIQ_Handler
+</UL>
+<BR>[Address Reference Count : 1]<UL><LI> startup.o(RESET)
+</UL><P>
+<H3>
+Undefined Global Symbols
+</H3>
+<P><STRONG><a name="[b460a0]"></a>__ARM_exceptions_init</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b46058]"></a>__Heap_DescSize</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b46010]"></a>__alloca_initialize</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45fc8]"></a>__cpp_initialize__aeabi_</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45f80]"></a>__cxa_finalize</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b46178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b4a068]"></a>__user_heap_extend</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED, UNUSED)
+<BR><BR>[Called By]<UL><LI><a href="#[b4a140]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_heap_extend (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45f38]"></a>_atexit_init</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b465b0]"></a>_call_atexit_fns</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b46640]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;exit (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45ef0]"></a>_clock_init</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45ea8]"></a>_fp_trap_init</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45e60]"></a>_get_lc_collate</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45e18]"></a>_get_lc_ctype</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45dd0]"></a>_get_lc_monetary</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45d88]"></a>_get_lc_numeric</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45d40]"></a>_get_lc_time</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45cf8]"></a>_getenv_init</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45cb0]"></a>_init_alloc</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45c68]"></a>_init_user_alloc</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45c20]"></a>_initio</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45bd8]"></a>_rand_init</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45b90]"></a>_signal_init</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b461c0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_init (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45b48]"></a>_terminate_user_alloc</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b46178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown (Weak Reference)
+</UL>
+
+<P><STRONG><a name="[b45b00]"></a>_terminateio</STRONG> (Unknown, 0 bytes, Stack size 0 bytes, UNDEFINED)
+<BR><BR>[Called By]<UL><LI><a href="#[b46178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_lib_shutdown (Weak Reference)
+</UL>
+<HR></body></html>

@@ -1,0 +1,89 @@
+ while(1){
+	 while((char)getchar_UART0()!=0){
+			
+			/*  get data*/
+			rxdata = (char)getchar_UART0();
+								
+		switch(state){
+
+		   case 0:	/* asteapta antet $ */
+			if(rxdata=='$'){
+				idx = 0;			 // reinitializeaza pointer
+				state = 1; 			 // schimba starea (testeaza urmatoarea sectiune a pachetului receptionat)
+				rxbuf[idx++]=rxdata; // adauga in buffer
+				}
+			break;
+
+			case 1: /* se primesc date in buffer si se verifica terminator * */
+			  if(rxdata=='*'){
+			     state = 2;
+				 rxbuf[idx++] = rxdata; // se adauga date in buffer;				 
+				 }
+				 else{	// daca nu s-a receptionat sfarsit de packet
+				 		rxbuf[idx++] = rxdata; // se adauga date in buffer
+					    if(rxdata=='L') is_gpgll = 1;
+						if(rxdata=='A')	is_active = 1;
+						if(is_gpgll && is_active) is_valid_packet = 1;
+					 }
+			 break;
+
+			 case 2:  /* dupa receptionarea * urmeaza 2 octeti de checksum */
+				 state = 3; 			// modifica starea
+				 rxbuf[idx++] = rxdata; // adauga date in buffer
+				 cnt = 3;				// caractere terminator
+			 break;
+
+			 case 3:
+			 	 rxbuf[idx++] = rxdata;
+				 cnt--;
+				 if(cnt==0){ /* conditie de buffer full si restart receptie */
+				    state = 0;	  // revenire in stare initiala	
+					rx_cnt = idx; // index final (nr carcatere receptionate)
+					rbfull = 1;   // setare buffer full
+					}
+			  break;
+		  	
+		 }// end switch
+		 /* setarea referintei de pozitie pentru robot */
+		 if(rbfull==1){	 // daca am receptionat un packet complet
+		    rbfull = 0;  // reseteaza indicatorul de buffer full
+			  if(is_valid_packet==1){	/* test daca pachetul este valid */		
+			
+				if(is_origin_set==0){   /* test daca originea a fost setata */
+					is_origin_set = 1;   // setarea originii a fost realizata
+					save_origin(); 	     // salvare origine 
+				    }	// origin setup
+
+				 /* extrage informatia de pozitie din pachet */	
+				 get_latitude_degrees();
+    			 get_latitude_minutes();
+    			 get_latitude_seconds();
+    			 get_longitude_degrees();
+    			 get_longitude_minutes();
+    			 get_longitude_seconds();
+				 				
+				/* transmite datele utile pe UART1 */
+			    itoa((int)get_x_position(),converted_X_pos); // conversie in char pentru transmiterea pe USART
+				for(k1=0;k1<3;k1++){
+				putchar_UART1(converted_X_pos[k1]);
+				if(k1==1){ // extragerea informatiei de pozitie in m
+				putchar_UART1('.');
+				}
+				}
+				
+				putchar_UART1(',');
+				
+			    itoa((int)get_y_position(),converted_Y_pos); // conversie in char pentru transmiterea pe USART
+				for(k2=0;k2<3;k2++){
+				putchar_UART1(converted_Y_pos[k2]);
+				if(k2==1){ // extragerea informatiei de  pozitie in m
+				 putchar_UART1('.');
+				}
+				}
+				
+				putchar_UART1('\n');
+			 
+	     	} // end if parse packet
+		 } // end if rbfull
+	  } // end while
+  }// end while(1)

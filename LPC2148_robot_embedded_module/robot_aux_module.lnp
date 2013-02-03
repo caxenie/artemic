@@ -1,0 +1,4 @@
+"startup.o" "serial.o" "main.o" "gps_odometry.o" "global_adc_init.o" "sonar_interface.o" "accelerometer_interface.o" --device DARMP --strict --scatter "robot_aux_module.sct" 
+--autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\robot_aux_module.map" -o "robot_aux_module.axf"
